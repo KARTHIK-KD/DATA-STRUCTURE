@@ -1,0 +1,98 @@
+//BINARY TREE TRAVERSAL *INORDER *PREORDER *POSTORDER
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+	int data;
+	struct node *left,*right;
+};
+
+void create(int value,struct node **top)
+{
+	struct node *newnode=(struct node*)malloc(sizeof(struct node));
+	newnode->data=value;
+	newnode->left=NULL;
+	newnode->right=NULL;
+	if((*top)==NULL)
+	{
+		(*top)=newnode;
+	}
+	else
+	{
+		if(((*top)->data)>=value)
+		{
+			create(value,&((*top)->left));
+		}
+		else
+		{
+			create(value,&((*top)->right));
+		}
+	}
+}
+
+void inorder(struct node **top)
+{
+	if((*top)!=NULL)
+	{
+		inorder(&((*top)->left));
+		printf("%d ",(*top)->data);
+		inorder(&((*top)->right));
+		
+	}
+
+}
+
+void preorder(struct node **top)
+{
+	if((*top)!=NULL)
+	{
+		printf("%d ",(*top)->data);
+		preorder(&((*top)->left));
+		preorder(&((*top)->right));
+		
+	}
+}
+
+void postorder(struct node **top)
+{
+	if((*top)!=NULL)
+	{
+		postorder(&((*top)->left));
+		postorder(&((*top)->right));
+		printf("%d ",(*top)->data);
+		
+	}
+	
+}
+
+
+
+void main()
+{
+	struct node *root=NULL;
+	int opt,value;
+	while(1)
+	{
+		printf("\n1.Insert\n2.Display\n3.Exit\nSelect your option : ");
+		scanf("%d",&opt);
+		switch(opt)
+		{
+			case 1:
+				{
+					printf("Enter the Value : ");
+					scanf("%d",&value);
+					create(value,&root);
+				}break;
+			case 2:
+				{
+					printf("\nINORDER : ");
+					inorder(&root);
+					printf("\nPREORDER : ");
+					preorder(&root);
+					printf("\nPOSTORDER : ");
+					postorder(&root);
+				}break;
+			case 3:exit(0);
+		}
+	}
+}
