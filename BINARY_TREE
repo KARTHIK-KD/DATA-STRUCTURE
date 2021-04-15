@@ -1,0 +1,70 @@
+//BINARY TREE IMPLEMENTATION
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+	int data;
+	struct node * left,*right;
+};
+
+void create(int value,struct node **top)
+{
+	struct node *newnode;
+	newnode=(struct node*)malloc(sizeof(struct node));
+	newnode->data=value;
+	newnode->left=NULL;
+	newnode->right=NULL;
+	if(*top==NULL)
+	{
+		(*top)=newnode;
+	}
+	else
+	{
+		if((*top)->data>=newnode->data)
+		{
+			create(newnode->data,&((*top)->left));
+		}
+		else
+		{
+			create(newnode->data,&((*top)->right));
+		}
+	}
+}
+
+void display(struct node **top)
+{
+	if((*top)!=NULL)
+	{
+		display(&((*top)->left));
+		printf("%d",(*top)->data);
+		display(&((*top)->right));
+		
+	}
+
+}
+
+
+void main()
+{
+	struct node *root=NULL;
+	int opt,value;
+	while(1)
+	{
+		printf("\n\n1.Create()\n2.Display()\n3.Exit\nSelect yoour Option : ");
+		scanf("%d",&opt);
+		switch(opt)
+		{
+			case 1:
+			{
+				printf("Enter the Value : ");
+				scanf("%d",&value);
+				create(value,&root);
+				
+			}break;
+			case 2:display(&root);break;
+			case 3:exit(0);
+		}
+	}
+	
+}
