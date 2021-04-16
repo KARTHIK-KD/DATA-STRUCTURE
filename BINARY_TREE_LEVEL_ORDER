@@ -1,0 +1,108 @@
+//BINARY TREE , LEVEL ORDER 
+
+
+#include<stdio.h>
+#include<stdlib.h>
+
+
+struct tree
+{
+	int data;
+	struct node *left,*right;
+};
+
+void create(struct tree **top,int value)
+{
+	struct tree *newtree=(struct tree*)malloc(sizeof(struct tree));
+	newtree->data=value;
+	newtree->left=NULL;
+	newtree->right=NULL;
+	if((*top)==NULL)
+	{
+		(*top)=newtree;
+	}
+	else
+	{
+		if((*top)->data>value)
+		{
+			create(&((*top)->left),value);
+		}
+		else
+		{
+			create(&((*top)->right),value);
+		}
+	}
+
+
+}
+int height(struct tree *top)
+{
+	if(top==NULL)
+	{
+		return 0;
+	}
+	else
+	{
+		int lheight=height(top->left);
+		int rheight=height(top->right);
+		if(lheight>rheight)
+		{
+			return (lheight+1);
+		}
+		else
+		{
+			return (rheight+1);
+		}
+	}
+}
+
+void print(struct tree* top,int value)
+{
+	if(top==NULL)
+		return;
+	if(value==1)
+	{
+		printf("%d ",top->data);
+	}	
+	else if(value>1)
+	{
+		print(top->left,value-1);
+		print(top->right,value-1);
+	}
+}
+
+void display(struct tree *top)
+{
+	int i;
+	int hig=height(top);
+	for(i=1;i<=hig;i++)
+	{
+		print(top,i);
+	}
+
+}
+
+void main()
+{
+	int opt,value;
+	struct tree *root=NULL;
+	while(1)
+	{
+		printf("\n1.INSERT \n2.display \n3.Exit\nSELECT YOUR OPTION : ");
+		scanf("%d",&opt);
+		switch(opt)
+		{
+			case 1:
+				{
+					printf("Enter the Value : ");
+					scanf("%d",&value);
+					create(&root,value);
+				}break;
+			case 2:
+				{
+					display(root);
+				}break;
+		}
+	}
+	
+}
